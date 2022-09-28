@@ -15,3 +15,22 @@ export const getCourses = (req: Request, res: Response): void => {
     }
   })()
 }
+
+export const addCourse = (req: Request, res: Response): void => {
+  void (async () => {
+    try {
+      const course = await prisma.course.create({
+        data: {
+          name: req.body.name,
+          lecturerId: req.body.userId
+        }
+      })
+      res.status(200).send({
+        message: 'Successfuly create course',
+        course
+      })
+    } catch (error) {
+      res.status(500).send(error)
+    }
+  })()
+}
